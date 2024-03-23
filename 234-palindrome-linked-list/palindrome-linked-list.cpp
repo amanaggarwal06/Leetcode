@@ -19,50 +19,52 @@ public:
 
         // //make a reversed linkedlist and then compare it with the originak linkedlist which is given.
 
-        // ListNode* head2 = head;
-        // ListNode* prev = NULL;
+        ListNode* head2 = head;
+        ListNode* prev = NULL;
 
-        // while(head2 != NULL){
+        while(head2 != NULL){
 
-        //     int data = head2->val;
-        //     ListNode* temp = new ListNode(data);
-        //     temp->next = prev;
-        //     prev = temp;
-        //     head2 = head2->next;
-        // }
-
-        // while(head != NULL && head2 != NULL){
-
-        //     if(head->val == head2->val){
-        //         head = head->next;
-        //         head2 = head2->next;
-        //     }
-        //     else{
-        //         return false;
-        //     }
-        // }
-
-        // return true;
-        stack<int> st;
-        ListNode* temp = head;
-
-        while(temp != NULL){
-            st.push(temp->val);
-            temp = temp->next;
+            int data = head2->val;
+            ListNode* temp = new ListNode(data);
+            temp->next = prev;
+            prev = temp;
+            head2 = head2->next;
         }
 
-        temp = head;
+        while(head != NULL && prev != NULL){
 
-        while(temp != NULL && !st.empty()){
-
-            if(temp->val != st.top()){
+            if(head->val == prev->val){
+                head = head->next;
+                prev = prev->next;
+            }
+            else{
                 return false;
             }
-
-            temp = temp->next;
-            st.pop();
-
         }
+
+        return true;
+
+        //---------------------------------------------
+        // stack<int> st;
+        // ListNode* temp = head;
+
+        // while(temp != NULL){
+        //     st.push(temp->val);
+        //     temp = temp->next;
+        // }
+
+        // temp = head;
+
+        // while(temp != NULL && !st.empty()){
+
+        //     if(temp->val != st.top()){
+        //         return false;
+        //     }
+
+        //     temp = temp->next;
+        //     st.pop();
+
+        // }
 
         return true;
     }
