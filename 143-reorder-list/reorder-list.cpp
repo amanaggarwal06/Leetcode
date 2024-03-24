@@ -1,27 +1,97 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        if ((!head) || (!head->next) || (!head->next->next)) return; // Edge cases
-        
-        stack<ListNode*> my_stack;
-        ListNode* ptr = head;
-        int size = 0;
-        while (ptr != NULL) // Put all nodes in stack
-        {
-            my_stack.push(ptr);
-            size++;
-            ptr = ptr->next;
+
+        //edge cases
+        if(head == NULL || head->next == NULL || head->next->next == NULL){
+            return;
         }
         
-        ListNode* pptr = head;
-        for (int j=0; j<size/2; j++) // Between every two nodes insert the one in the top of the stack
-        {
-            ListNode *element = my_stack.top();
-            my_stack.pop();
-            element->next = pptr->next;
-            pptr->next = element;
-            pptr = pptr->next->next;
+        // ListNode* head2 = head;
+        // ListNode* prev = NULL; int len = 0;
+
+        // while(head2 != NULL){
+
+        //     ListNode* fwd = head2->next;
+        //     head2->next = prev;
+        //     prev = head2;
+        //     head2 = fwd;
+        //     len++;
+        // }
+
+        // int new_len = len/2;
+        // ListNode* temp = head;
+
+        // ListNode* curr_fwd =NULL;
+        // ListNode* prev_fwd = NULL; ListNode* prev_prev = NULL;
+
+        // while(new_len && temp!= NULL && prev != NULL){
+
+        //     curr_fwd = temp->next;
+        //     prev_fwd = prev->next;
+        //     temp->next = prev;
+        //     prev->next = prev_fwd;
+        //     prev_prev = prev;
+        //     prev = prev_fwd;
+        //     temp = curr_fwd;
+        //     new_len--;
+        // }
+
+        // if(len%2 == 0){
+        //     prev_prev->next = NULL;
+        // }
+        // else{
+        //     temp->next = NULL;
+        // }
+
+
+        stack<ListNode*> st;
+        ListNode* temp = head; int len = 0;
+
+        while(temp != NULL){
+
+            st.push(temp);
+            temp = temp->next;
+            len++;
         }
-        pptr->next = NULL;
+
+        ListNode* temp2 = head;
+         int new_len = len/2;
+        //  ListNode* topi = head;
+
+         while(new_len){
+            
+            ListNode* topi = st.top();
+            st.pop();
+
+            ListNode* fwd = temp2->next;
+            temp2->next = topi;
+            topi->next = fwd;
+            temp2 = fwd;
+            new_len--;
+         }
+
+        //  if(len%2 == 0){
+        //     // topi->next == NULL;
+        //     // temp2 = NULL;
+        //     temp2->next == NULL;
+        //  }
+        //  else{
+        //     temp2->next == NULL;
+        //  }
+        temp2->next = NULL;
+
+        
+
     }
 };
