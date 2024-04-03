@@ -33,6 +33,10 @@ public:
 
                         if(d + 1 < dist[nrow][ncol]){
                             dist[nrow][ncol] = d + 1;
+
+                            if(nrow == n-1 && ncol == n-1){
+                                return dist[nrow][ncol] + 1;
+                            }
                             minh.push({dist[nrow][ncol], {nrow, ncol}});
                         }
                     }
