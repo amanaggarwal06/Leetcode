@@ -2,27 +2,20 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         
-        int n = s.size();
-        int count[256];
-        for(int i=0; i<256; i++){
-            count[i] = -1;
-        }
+        unordered_map<char, int> count;
+        int left = 0, right = 0, maxi = 0;
 
-        int l = 0, r = 0, maxi = 0;
+        while(left <= right && right < s.size()){
 
-        while(r<n){
+            count[s[right]]++;
 
-            if(count[s[r]] != -1){
-
-                if(count[s[r]] >= l){
-                    l = count[s[r]] + 1;
-                }
+            while(left <= right && count[s[right]] > 1){
+                count[s[left]]--;
+                left++;
             }
 
-            //l to r -->subarray
-            maxi = max(maxi, r-l+1);
-            count[s[r]] = r;
-            r++;
+            maxi = max(maxi, right-left+1);
+            right++;
         }
 
         return maxi;
