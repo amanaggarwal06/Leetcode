@@ -12,40 +12,38 @@ class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         
-        //edge case
-        if(head->next == NULL){
-            if(n==1){
-                return NULL;
-            }
+        //brute--> 1. Get total cnt of nodes in SLL;
+        //         2. Now Del--> (total-N+1)th node from the start.
 
-            return head;
+        //optimal--> using slow and fast pointers
+
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
+        ListNode* slow = dummy;
+        ListNode* fast = dummy;
+
+        while(n--){
+            fast = fast->next;
         }
 
-        ListNode* temp = head; int cnt = 0;
-        while(temp != NULL){
-            cnt++;
-            temp = temp->next;
+        while(fast->next != NULL){
+            fast = fast->next;
+            slow = slow->next;
         }
 
-        int del_pos = cnt-n; cnt =0;
-        if(del_pos == 0) return head->next;
-        else if(del_pos < 0) return head;
-
-        temp = head;
-        while(temp != NULL){
-            cnt++;
-            if(cnt == del_pos){
-                
-                if(temp->next != NULL){
-                    temp->next = temp->next->next;
-                }
-                break;
-            }
-            else{
-                temp = temp->next;
-            }
+        if(slow->next == head){
+            slow->next = slow->next->next;
+            delete head;
+        }
+        else{
+            ListNode* temp = slow->next;
+            slow->next = slow->next->next;
+            delete temp;
         }
 
-        return head;
+         return dummy->next;
+
+
+
     }
 };
