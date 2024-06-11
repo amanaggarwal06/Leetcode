@@ -11,26 +11,27 @@ public:
     bool hasCycle(ListNode *head) {
         
         //edge cases
-        if(head == NULL){
-            return false;
-        }
-        else if(head->next == head){
-            return true;
-        }
+        if(head == NULL || head->next == NULL) return false;
 
-        unordered_map<ListNode*, bool> mp;
-        ListNode*temp = head;
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        while(temp!= NULL){
+        slow = slow->next;
+        fast = fast->next;
 
-            if(mp[temp]){
-               return true;
+        if(fast != NULL) fast = fast->next;
+
+        while(fast != NULL && slow != fast){
+
+            slow = slow->next;
+            fast = fast->next;
+
+            if(fast != NULL){
+                fast = fast->next;
             }
-            
-            mp[temp] = true;
-            temp = temp->next;
         }
 
-        return false;
+        if(fast == NULL) return false;
+        return true;
     }
 };
